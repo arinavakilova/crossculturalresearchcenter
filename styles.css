@@ -1,0 +1,523 @@
+body {
+  margin: 0;
+  background: white;
+  font-family: Arial, sans-serif;
+  overflow: scroll;
+}
+#canvas {
+  position: relative;
+  width: 7040px;
+  height: 5040px;
+  background: white;
+  overflow: hidden;
+}
+
+.menu-item {
+  z-index: 10;
+  position: absolute;
+  font-size: 23.5px;
+  font-family: Arial, sans-serif;
+  pointer-events: auto; /* Включаем возможность взаимодействия с элементами */
+  transition: opacity 0.3s ease; /* Плавное изменение прозрачности */
+}
+
+/* координаты из Figma */
+#manifesto {
+  position: fixed;
+  left: -133px;
+  top: -1px;
+  
+}
+
+#current {
+  position: fixed;
+  left: -102px;
+  top: -76px;
+  text-align: right;
+  transform: rotate(45deg);
+}
+
+#archive {
+  position: fixed;
+  left: -29px;
+  top: -80px;
+  transform: rotate(90deg);
+}
+
+#store {
+  position: fixed;
+  left: 28px;
+  top: -51px;
+  transform: rotate(-45deg);
+}
+#lang {
+  position: fixed;
+  left: 76.5px;
+  top: 1px;
+  font-size: 20px;
+}
+/* Эффект полупрозрачности при наведении */
+#manifesto:hover,
+#current:hover,
+#archive:hover,
+#lang:hover,
+#store:hover {
+  opacity: 0.3; /* Полупрозрачный эффект */
+}
+
+#menu {
+  position: fixed;
+  top: 50.05%;
+  left: 51.545%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#center-label {
+  font-size: 23.5px;
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  display: inline-block;
+}
+
+/* Полупрозрачность при наведении */
+#center-label:hover {
+  opacity: 0.5;
+}
+
+/* Кастомное подчёркивание: чуть ниже и толще */
+#center-label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1.2px; /* сдвигаем вниз */
+  width: 100%;
+  height: 2px; /* толщина */
+  background-color: black;
+}
+#languages {
+  margin-top: 10px;
+  font-family: "Times New Roman", serif;
+  font-size: 22px;
+  display: none;
+  pointer-events: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+#lines-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.rectangle {
+  position: absolute;
+  width: 200px;
+  height: 20px;
+  background-color: rgb(0, 0, 0);
+  border: 1.6px solid black;
+  top: 15px; /* координаты можешь менять по нужде */
+  left: 15px;
+  z-index: 2;
+}
+.white-rectangle {
+  position: absolute;
+  width: 200px;
+  height: 20px;
+  background-color: rgb(255, 255, 255);
+  border: 1.6px solid black;
+  top: 15px; /* координаты можешь менять по нужде */
+  left: 215px;
+  z-index: 2;
+}
+.rectangle2 {
+  position: absolute;
+  width: 200px;
+  height: 20px;
+  background-color: rgb(0, 0, 0);
+  border: 1.6px solid black;
+  top: 5005px; /* координаты можешь менять по нужде */
+  left: 15px;
+  z-index: 2;
+}
+.white-rectangle2 {
+  position: absolute;
+  width: 200px;
+  height: 20px;
+  background-color: rgb(255, 255, 255);
+  border: 1.6px solid black;
+  top: 5005px; /* координаты можешь менять по нужде */
+  left: 215px;
+  z-index: 2;
+}
+.rectangle3 {
+  position: absolute;
+  width: 20px;
+  height: 200px;
+  background-color: rgb(0, 0, 0);
+  border: 1.6px solid black;
+  left: 15px;
+  z-index: 2;
+}
+.white-rectangle3 {
+  position: absolute;
+  width: 20px;
+  height: 200px;
+  background-color: rgb(255, 255, 255);
+  border: 1.6px solid black;
+ left: 15px;
+  z-index: 2;
+}
+.rectangle4 {
+  position: absolute;
+  width: 20px;
+  height: 200px;
+  background-color: rgb(0, 0, 0);
+  border: 1.6px solid black;
+  left: 7000px;
+  z-index: 2;
+}
+.white-rectangle4 {
+  position: absolute;
+  width: 20px;
+  height: 200px;
+  background-color: rgb(255, 255, 255);
+  border: 1.6px solid black;
+ left: 7000px;
+  z-index: 2;
+}
+.dashed-line {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dashed-line.horizontal {
+  top: 50%;
+  left: 50%;
+  width: 100.5%;  /* линия растягивается на всю ширину */
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    to right,
+    #E9E9E9 0 11px,  /* dash */
+    transparent 11px 22px /* gap */
+  );
+  background-position: center;  /* сдвигаем в центр */
+  transform: translate(-50%, -50%);  /* позиционируем по центру */
+}
+
+.dashed-line.vertical {
+  top: 50%;
+  left: 49.985%;
+  width: 3px;
+  height: 99.31%;  /* линия растягивается на всю высоту */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #E9E9E9 0 11px,  /* dash */
+    transparent 11px 22px /* gap */
+  );
+  background-position: center;  /* сдвигаем в центр */
+  transform: translate(-50%, -50%);  /* позиционируем по центру */
+}
+.dashed-line.diagonal1 {
+  top: 50.001%;
+  left: 49.995%;
+  width: 100.5%; /* линия растягивается на всю ширину */
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    to right,
+    #E9E9E9 0 11px,  /* dash */
+    transparent 11px 22px /* gap */
+  );
+  background-position: center;  /* сдвигаем в центр */
+  transform: translate(-50%, -50%) rotate(45deg);  /* позиционируем по центру и поворачиваем на 45° */
+}
+
+.dashed-line.diagonal2 {
+  top: 49.995%;
+  left: 49.995%;
+  width: 100.5%; /* линия растягивается на всю ширину */
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    to right,
+    #E9E9E9 0 11px,  /* dash */
+    transparent 11px 22px /* gap */
+  );
+  background-position: center;  /* сдвигаем в центр */
+  transform: translate(-50%, -50%) rotate(-45deg);  /* позиционируем по центру и поворачиваем на -45° */
+}
+#center-text {
+  display: none;
+  position: absolute;
+  top: 37.5px; /* отрегулируй по вкусу */
+  left: -140px; /* подвинь туда, где тебе нужно */
+  z-index: 1000;
+  font-family: "Times New Roman", serif;
+  font-size: 18.5px;
+  pointer-events: auto;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.label {
+  position: absolute;
+  font-family: Arial, sans-serif;
+  font-size: 33px;
+  color: black;
+  padding: 4px 8px;
+  pointer-events: none; /* чтобы не мешать кликам по холсту */
+  z-index: 10;
+}
+
+.label.current {
+  top: 100px;
+  left: 1065px;
+  text-align: right;
+  transform: rotate(45deg);
+}
+
+.label.archive {
+  top: 100px;
+  left: 49.15%;
+  transform: rotate(90deg);
+}
+.label.store {
+  top: 100px;
+  right: 1082px;
+  transform: rotate(-45deg);
+}
+.label.manifesto {
+  top: 2495px;
+  left: 100px;
+    transform: rotate(0deg);
+}
+.big-red-box {
+  width: 2000px;
+  height: 2300px;
+  background-color: red;
+  margin-left: auto; /* выравнивает по правому краю */
+  z-index: -1; /* на заднем плане */
+}
+.dragon {
+  position: absolute;
+  bottom: 15px; /* отступ от нижнего края */
+  right: 130px;  /* отступ от правого края */
+  width: 200px; /* размер изображения — подстрой под нужный */
+  height: auto; /* сохраняет пропорции */
+  z-index: 10; /* убедись, что поверх нужных слоев */
+}
+.block {
+  position: absolute;
+  background: rgb(255, 255, 255);
+  z-index: 1; /* Над пунктиром, под контентом */
+}
+
+/* Размеры холста */
+:root {
+  --canvas-width: 7040px;
+  --canvas-height: 5040px;
+  --center-x: calc(var(--canvas-width) / 2);
+  --center-y: calc(var(--canvas-height) / 2);
+  --diagonal: 10000px; /* С запасом */
+}
+
+/* Юг */
+.block.s {
+  left: 49.99%;
+  top: 50.1%;
+  width: 4px;
+  height: calc(var(--canvas-height) / 2);
+  transform: translateX(-50%);
+}
+
+/* Восток */
+.block.e {
+  left: 50.05%;
+  top: 50%;
+  width: calc(var(--canvas-width) / 2);
+  height: 4px;
+  transform: translateY(-50%);
+}
+
+/* Юго-восток (↘) */
+.block.se {
+  left: 49.95%;
+  top: 50.1%;
+  width: var(--diagonal);
+  height: 4px;
+  transform-origin: 0 0;
+  transform: rotate(45deg) translateY(-7px); /* Центруем по пунктиру */
+}
+
+/* Юго-запад (↙) */
+.block.sw {
+  left: 49.9%;
+  top: 49.96%;
+  width: var(--diagonal);
+  height: 4px;
+  transform-origin: 0 0;
+  transform: rotate(135deg) translateY(-7px); /* Центруем по пунктиру */
+}
+
+
+.london {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  width: 57px; /* отрегулируй по необходимости */
+  height: auto;
+  object-fit: contain;
+  z-index: 10;
+}
+.most {
+  position: absolute;
+  top: 615px;
+  left: 65px;
+  width: 1420px; /* отрегулируй по необходимости */
+  height: auto;
+  object-fit: contain;
+  z-index: 0;
+}
+.li-text {
+  position: absolute;
+  top: 518px;
+  left: 65px;
+  width: 1420px;
+  font-family: "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: justify;
+  z-index: 12;
+}
+.label-research {
+  position: absolute;
+  top: 380px;
+  left: 65px;
+  font-family: "Times New Roman", serif;
+  font-size: 18px;
+}
+.flag, .book, .stick {
+  position: absolute;
+  top: 215px;
+  width: 710px;
+  z-index: 0;
+}
+
+.flag {
+  right: 790px;
+}
+
+.book {
+  right: 65px;
+}
+
+.stick {
+  top: 1240px;
+  right: 70px;
+}
+
+.shop-subtext {
+  position: absolute;
+  top: 700px; /* Расположено ниже основного заголовка */
+  right: 1277px;
+   font-family: Arial, sans-serif;
+  font-size: 18px;
+  color: black;
+  text-align: right;
+  z-index: 10;
+  cursor: pointer;
+  text-decoration: none; /* Без подчеркивания по умолчанию */
+}
+
+.shop-subtext:hover {
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+.shop-subtext2 {
+  position: absolute;
+  text-align: left;
+  top: 1172px; /* Расположено ниже основного заголовка */
+  right: 516px;
+   font-family: Arial, sans-serif;
+  font-size: 18px;
+  color: black;
+  text-align: right;
+  z-index: 10;
+  cursor: pointer;
+  text-decoration: none; /* Без подчеркивания по умолчанию */
+}
+
+.shop-subtext2:hover {
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+.shop-subtext3 {
+  position: absolute;
+  text-align: left;
+  top: 1962px; /* Расположено ниже основного заголовка */
+  right: 541px;
+   font-family: Arial, sans-serif;
+  font-size: 18px;
+  color: black;
+  text-align: right;
+  z-index: 10;
+  cursor: pointer;
+  text-decoration: none; /* Без подчеркивания по умолчанию */
+}
+
+.shop-subtext3:hover {
+  text-decoration: underline; /* Подчеркивание при наведении */
+}
+.floor {
+  position: absolute;
+  top: 4920px; /* Расположено ниже основного заголовка */
+  left: 70px;
+   font-family: 'Times New Roman', Times, serif;
+  font-size: 23px;
+  color: black;
+  text-align: left;
+  z-index: 10;
+}
+.label-research1 {
+  position: absolute;
+  top: 180px;
+  left: 2865px;
+  font-family: "Times New Roman", serif;
+  font-size: 18px;
+}
+.Souvenire {
+  position: absolute;
+  top: 65px;
+  right: 60px;
+  width: 560px; /* отрегулируй по необходимости */
+  height: auto;
+  object-fit: contain;
+  z-index: 10;
+}
+.floor2 {
+  position: absolute;
+  top: 2200px; /* Расположено ниже основного заголовка */
+  right: 1270px;
+   font-family: 'Times New Roman', Times, serif;
+  font-size: 23px;
+  color: black;
+  text-align: left;
+  z-index: 10;
+}
+.manifesto-text {
+  position: absolute;
+  top: 2547px;
+  left: 93px;
+  transform: translateY(-50%);
+    transform: rotate(-0.3deg);
+  font-size: 21px !important;
+  font-family: "Times New Roman", Times, serif !important;
+  color: rgb(0, 0, 0) !important;
+  text-align: center;
+  line-height: 1.2;
+  max-width: 1400px; /* можно подкорректировать ширину */
+}
